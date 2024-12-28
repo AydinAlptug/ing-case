@@ -1,5 +1,6 @@
 package com.credit.credit.controller;
 
+import com.credit.credit.service.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,6 +17,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoanController {
 
+	private final LoanService loanService;
+
 	@GetMapping("/{userId}")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or @authorizationService.hasAccess(authentication, #userId)")
 	public ResponseEntity<String> listLoans(@PathVariable UUID userId) {
@@ -25,6 +28,7 @@ public class LoanController {
 	@PostMapping("/{userId}")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or @authorizationService.hasAccess(authentication, #userId)")
 	public ResponseEntity<Void> createLoan(@PathVariable UUID userId) {
+		loanService.createLoan();
 		return ResponseEntity.ok().build();
 	}
 }
