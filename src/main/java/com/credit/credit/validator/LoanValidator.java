@@ -29,10 +29,10 @@ public class LoanValidator {
 		}
 	}
 
-	public boolean validate(CreateLoanRequest createLoanRequest) {
+	public void validate(CreateLoanRequest createLoanRequest) {
 		if (currentSpecification == null) {
 			throw new IllegalStateException("No specification added.");
 		}
-		return currentSpecification.isSatisfiedBy(createLoanRequest);
+		currentSpecification.isSatisfiedBy(createLoanRequest);
 	}
 }
