@@ -7,8 +7,20 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-	@ExceptionHandler({ InsufficientLimitException.class})
-	public ResponseEntity<Object> handleNotEnoughLimitException(InsufficientLimitException exception) {
+	@ExceptionHandler({ InsufficientCreditLimitException.class})
+	public ResponseEntity<Object> handleNotEnoughLimitException(InsufficientCreditLimitException exception) {
+		return ResponseEntity
+				.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(exception.getMessage());
+	}
+	@ExceptionHandler({ InvalidInstallmentNumberException.class})
+	public ResponseEntity<Object> handleInvalidInstallmentNumberException(InvalidInstallmentNumberException exception) {
+		return ResponseEntity
+				.status(HttpStatus.INTERNAL_SERVER_ERROR)
+				.body(exception.getMessage());
+	}
+	@ExceptionHandler({ InvalidInterestRateException.class})
+	public ResponseEntity<Object> handleInvalidInterestRateException(InvalidInterestRateException exception) {
 		return ResponseEntity
 				.status(HttpStatus.INTERNAL_SERVER_ERROR)
 				.body(exception.getMessage());

@@ -11,10 +11,8 @@ import java.math.BigDecimal;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
-	private String email;
-	private String password;
-	private String name;
-	private String surname;
-	private BigDecimal creditLimit;
+public class CreateLoanRequest {
+	private BigDecimal loanAmount;
+	private BigDecimal interestRate;
+	private int numberOfInstallments;
 }
