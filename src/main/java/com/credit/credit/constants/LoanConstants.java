@@ -9,5 +9,6 @@ public class LoanConstants {
 	public static final BigDecimal MIN_INTEREST_RATE = new BigDecimal("0.1");
 	public static final BigDecimal MAX_INTEREST_RATE = new BigDecimal("0.5");
 
+	public static final int MAX_UPFRONT_PAYMENT_COUNT = 3;
 	private LoanConstants() {}
 }

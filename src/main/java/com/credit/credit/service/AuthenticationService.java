@@ -58,6 +58,7 @@ public class AuthenticationService {
 					.roles(List.of(role))
 					.customer(customer)
 					.build();
+
 			userRepository.save(user);
 
 			String jwtToken = jwtService.generateToken(user);
@@ -65,6 +66,7 @@ public class AuthenticationService {
 			return AuthenticationResponse
 					.builder()
 					.token(jwtToken)
+					.customerId(customer.getId())
 					.build();
 		} catch (Exception e) {
 			throw e;
@@ -85,6 +87,7 @@ public class AuthenticationService {
 			return AuthenticationResponse
 					.builder()
 					.token(jwtToken)
+					.customerId(user.getCustomer().getId())
 					.build();
 		} catch (AuthenticationException e) {
 			throw e;

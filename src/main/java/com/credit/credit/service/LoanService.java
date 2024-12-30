@@ -1,5 +1,6 @@
 package com.credit.credit.service;
 
+import com.credit.credit.constants.LoanConstants;
 import com.credit.credit.enums.ChainingMethod;
 import com.credit.credit.enums.SpecificationType;
 import com.credit.credit.exception.EntityNotFoundException;
@@ -10,10 +11,12 @@ import com.credit.credit.model.entity.Loan;
 import com.credit.credit.model.entity.LoanInstallment;
 import com.credit.credit.model.dto.LoanDto;
 import com.credit.credit.model.request.CreateLoanRequest;
+import com.credit.credit.model.request.PayLoanRequest;
 import com.credit.credit.model.response.CreateLoanResponse;
 import com.credit.credit.model.mapper.Mapper;
 import com.credit.credit.model.response.ListLoanInstallmentsResponse;
 import com.credit.credit.model.response.ListLoansResponse;
+import com.credit.credit.model.response.PayLoanResponse;
 import com.credit.credit.repository.ICustomerRepository;
 import com.credit.credit.repository.ILoanRepository;
 import com.credit.credit.repository.ILoanInstallmentRepository;
@@ -28,6 +31,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -108,6 +112,74 @@ public class LoanService {
 		} catch (Exception e) {
 			throw new InternalServerException(e.getMessage());
 		}
+	}
+
+	@Transactional
+	public PayLoanResponse payLoan(UUID loanId, PayLoanRequest payLoanRequest) {
+		try {
+			BigDecimal paymentAmount = payLoanRequest.getAmount();
+
+			Loan loan = loanRepository.findById(loanId).orElseThrow(() ->
+					new EntityNotFoundException("Loan not found"));
+
+			List<LoanInstallment> installments = getUnpaidInstallments(loanId);
+
+			BigDecimal remainingAmount = paymentAmount;
+
+			int installmentsPaid = 0;
+			BigDecimal totalPaidAmount = BigDecimal.ZERO;
+
+			for (LoanInstallment installment : installments) {
+				if (remainingAmount.compareTo(installment.getAmount()) >= 0) {
+					installment.setPaidAmount(installment.getAmount());
+					installment.setPaymentDate(LocalDateTime.now());
+					installment.setPaid(true);
+					remainingAmount = remainingAmount.subtract(installment.getAmount());
+					totalPaidAmount = totalPaidAmount.add(installment.getAmount());
+					installmentsPaid++;
+
+					loanInstallmentRepository.save(installment);
+
+					if (remainingAmount.compareTo(BigDecimal.ZERO) <= 0) {
+						break;
+					}
+				} else {
+					break;
+				}
+			}
+
+			if (installmentsPaid > 0 && installments.stream().allMatch(LoanInstallment::isPaid)) {
+				loan.setPaid(true);
+				loanRepository.save(loan);
+
+				Customer customer = loan.getCustomer();
+				customer.setUsedCreditLimit(customer.getUsedCreditLimit().subtract(paymentAmount)); // ?
+				customerRepository.save(customer);
+			}
+
+			BigDecimal remainingDept = loanInstallmentRepository.findByLoanId(loanId) // repeating call
+					.stream()
+					.filter(i -> !i.isPaid())
+					.map(LoanInstallment::getAmount)
+					.reduce(BigDecimal.ZERO, BigDecimal::add);
+
+			return PayLoanResponse.builder()
+					.installmentsPaid(installmentsPaid)
+					.totalAmountPaid(totalPaidAmount)
+					.loanPaid(loan.isPaid())
+					.remainingDept(remainingDept)
+					.remainingAmount(remainingAmount)
+					.build();
+
+		} catch (Exception e) {
+			throw new InternalServerException("Error processing loan payment: " + e.getMessage());
+		}
+	}
+
+	private List<LoanInstallment> getUnpaidInstallments(UUID loanId) {
+		return loanInstallmentRepository.findByLoanId(loanId).stream().filter(i -> !i.isPaid())
+				.filter(i -> i.getDueDate().isBefore(LocalDateTime.now().plusMonths(LoanConstants.MAX_UPFRONT_PAYMENT_COUNT)))
+				.sorted(Comparator.comparing(LoanInstallment::getDueDate)).collect(Collectors.toList());
 	}
 
 	private void validateCreateLoan(CreateLoanRequest createLoanRequest, BigDecimal creditLimit) {
