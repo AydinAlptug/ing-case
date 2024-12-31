@@ -1,7 +1,7 @@
 package com.credit.credit.validator;
 
 import com.credit.credit.constants.LoanConstants;
-import com.credit.credit.exception.InvalidInterestRateException;
+import com.credit.credit.exception.loan.InvalidInterestRateException;
 import com.credit.credit.model.request.CreateLoanRequest;
 
 import java.math.BigDecimal;

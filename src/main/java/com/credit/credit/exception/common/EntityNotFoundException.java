@@ -1,4 +1,4 @@
-package com.credit.credit.exception;
+package com.credit.credit.exception.common;
 
 public class EntityNotFoundException extends RuntimeException {
 

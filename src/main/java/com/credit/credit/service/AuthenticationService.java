@@ -1,6 +1,9 @@
 package com.credit.credit.service;
 
 import com.credit.credit.constants.Constants;
+import com.credit.credit.exception.common.BadRequestException;
+import com.credit.credit.exception.common.InternalServerException;
+import com.credit.credit.exception.loan.InvalidCredentialsException;
 import com.credit.credit.model.entity.Customer;
 import com.credit.credit.model.entity.Role;
 import com.credit.credit.model.entity.User;
@@ -41,6 +44,11 @@ public class AuthenticationService {
 	@Transactional
 	public AuthenticationResponse register(RegisterRequest request) {
 		try {
+
+			userRepository.findByEmail(request.getEmail()).ifPresent(user -> {
+				throw new BadRequestException("The email address is already in use.");
+			});
+
 			Role role = roleRepository.findByName(Constants.ROLE_CUSTOMER);
 
 			Customer customer = Customer.builder()
@@ -68,8 +76,12 @@ public class AuthenticationService {
 					.token(jwtToken)
 					.customerId(customer.getId())
 					.build();
-		} catch (Exception e) {
+		} catch (BadRequestException e) {
 			throw e;
+		}  catch (IllegalArgumentException e) {
+			throw new BadRequestException(e.getMessage());
+		} catch (Exception e) {
+			throw new InternalServerException("An error occurred while registering the user.");
 		}
 	}
 
@@ -90,7 +102,9 @@ public class AuthenticationService {
 					.customerId(user.getCustomer().getId())
 					.build();
 		} catch (AuthenticationException e) {
-			throw e;
+			throw new InvalidCredentialsException("Invalid credentials.");
+		} catch (Exception e) {
+			throw new InternalServerException("An error occurred while logging in.");
 		}
 	}
 }

@@ -1,7 +1,7 @@
 package com.credit.credit.validator;
 
 import com.credit.credit.constants.LoanConstants;
-import com.credit.credit.exception.InvalidInstallmentNumberException;
+import com.credit.credit.exception.loan.InvalidInstallmentNumberException;
 import com.credit.credit.model.request.CreateLoanRequest;
 
 public class InstallmentNumberSpecification implements ISpecification<CreateLoanRequest> {

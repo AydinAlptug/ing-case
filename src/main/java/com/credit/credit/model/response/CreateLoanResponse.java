@@ -14,7 +14,6 @@ public class CreateLoanResponse {
 	private UUID loanId;
 	private BigDecimal loanAmount;
 	private BigDecimal totalLoanAmount;
-	private BigDecimal monthlyInstallment;
 	private int numberOfInstallments;
 	private List<LoanInstallmentDto> installments;
 }

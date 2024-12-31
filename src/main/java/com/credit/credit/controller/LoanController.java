@@ -6,6 +6,7 @@ import com.credit.credit.model.response.CreateLoanResponse;
 import com.credit.credit.model.response.ListLoanInstallmentsResponse;
 import com.credit.credit.model.response.ListLoansResponse;
 import com.credit.credit.model.response.PayLoanResponse;
+import com.credit.credit.service.LoanInstallmentService;
 import com.credit.credit.service.LoanService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,8 @@ public class LoanController {
 
 	private final LoanService loanService;
 
+	private final LoanInstallmentService loanInstallmentService;
+
 	@GetMapping("/{customerId}")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or @authorizationService.hasAccess(authentication, #customerId)")
 	public ResponseEntity<ListLoansResponse> listLoans(@PathVariable UUID customerId) {
@@ -35,7 +38,7 @@ public class LoanController {
 	@GetMapping("/installment/{loanId}")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or @authorizationService.hasAccessToLoan(authentication, #loanId)")
 	public ResponseEntity<ListLoanInstallmentsResponse> listLoanInstallments(@PathVariable UUID loanId) {
-		return ResponseEntity.ok(loanService.getLoanInstallments(loanId));
+		return ResponseEntity.ok(loanInstallmentService.getLoanInstallments(loanId));
 	}
 
 	@PostMapping("/{customerId}")

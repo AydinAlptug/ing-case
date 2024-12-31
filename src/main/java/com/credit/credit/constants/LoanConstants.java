@@ -10,5 +10,8 @@ public class LoanConstants {
 	public static final BigDecimal MAX_INTEREST_RATE = new BigDecimal("0.5");
 
 	public static final int MAX_UPFRONT_PAYMENT_COUNT = 3;
+	public static final BigDecimal REWARD_PENALTY_COEFFICIENT = BigDecimal.valueOf(0.001);
+
+
 	private LoanConstants() {}
 }

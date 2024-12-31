@@ -3,8 +3,11 @@ package com.credit.credit.service;
 import com.credit.credit.constants.LoanConstants;
 import com.credit.credit.enums.ChainingMethod;
 import com.credit.credit.enums.SpecificationType;
-import com.credit.credit.exception.EntityNotFoundException;
-import com.credit.credit.exception.InternalServerException;
+import com.credit.credit.exception.common.EntityNotFoundException;
+import com.credit.credit.exception.loan.InsufficientCreditLimitException;
+import com.credit.credit.exception.common.InternalServerException;
+import com.credit.credit.exception.loan.InvalidInstallmentNumberException;
+import com.credit.credit.exception.loan.InvalidInterestRateException;
 import com.credit.credit.model.dto.LoanInstallmentDto;
 import com.credit.credit.model.entity.Customer;
 import com.credit.credit.model.entity.Loan;
@@ -14,13 +17,10 @@ import com.credit.credit.model.request.CreateLoanRequest;
 import com.credit.credit.model.request.PayLoanRequest;
 import com.credit.credit.model.response.CreateLoanResponse;
 import com.credit.credit.model.mapper.Mapper;
-import com.credit.credit.model.response.ListLoanInstallmentsResponse;
 import com.credit.credit.model.response.ListLoansResponse;
 import com.credit.credit.model.response.PayLoanResponse;
 import com.credit.credit.repository.ICustomerRepository;
 import com.credit.credit.repository.ILoanRepository;
-import com.credit.credit.repository.ILoanInstallmentRepository;
-import com.credit.credit.repository.IUserRepository;
 import com.credit.credit.validator.LoanValidator;
 import com.credit.credit.validator.SpecificationFactory;
 import lombok.RequiredArgsConstructor;
@@ -30,8 +30,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -40,14 +40,11 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 public class LoanService {
-
-	private final IUserRepository userRepository;
-
 	private final ICustomerRepository customerRepository;
 
 	private final ILoanRepository loanRepository;
 
-	private final ILoanInstallmentRepository loanInstallmentRepository;
+	private final LoanInstallmentService loanInstallmentService;
 
 	private final SpecificationFactory specificationFactory;
 
@@ -65,22 +62,6 @@ public class LoanService {
 				.customerId(customerId)
 				.loans(loanDtos)
 				.build();
-	}
-
-	public ListLoanInstallmentsResponse getLoanInstallments(UUID loanId) {
-		try {
-			List<LoanInstallment> installments = loanInstallmentRepository.findByLoanId(loanId);
-			List<LoanInstallmentDto> installmentDtos = installments.stream()
-					.map(mapper::toLoanInstallmentDto)
-					.collect(Collectors.toList());
-
-			return ListLoanInstallmentsResponse.builder()
-					.loanId(loanId)
-					.installments(installmentDtos)
-					.build();
-		} catch (Exception e) {
-			throw new InternalServerException(e.getMessage());
-		}
 	}
 
 	@Transactional
@@ -109,8 +90,13 @@ public class LoanService {
 					.installments(installments)
 					.build();
 
+		} catch (EntityNotFoundException |
+				 InsufficientCreditLimitException |
+				 InvalidInterestRateException |
+				 InvalidInstallmentNumberException e) {
+			throw e;
 		} catch (Exception e) {
-			throw new InternalServerException(e.getMessage());
+			throw new InternalServerException("An error occurred.");
 		}
 	}
 
@@ -118,27 +104,28 @@ public class LoanService {
 	public PayLoanResponse payLoan(UUID loanId, PayLoanRequest payLoanRequest) {
 		try {
 			BigDecimal paymentAmount = payLoanRequest.getAmount();
+			BigDecimal remainingAmount = paymentAmount;
 
 			Loan loan = loanRepository.findById(loanId).orElseThrow(() ->
 					new EntityNotFoundException("Loan not found"));
 
-			List<LoanInstallment> installments = getUnpaidInstallments(loanId);
-
-			BigDecimal remainingAmount = paymentAmount;
+			List<LoanInstallment> installments = loanInstallmentService.getUnpaidInstallments(loanId, false);
 
 			int installmentsPaid = 0;
 			BigDecimal totalPaidAmount = BigDecimal.ZERO;
 
 			for (LoanInstallment installment : installments) {
-				if (remainingAmount.compareTo(installment.getAmount()) >= 0) {
-					installment.setPaidAmount(installment.getAmount());
+				BigDecimal adjustedAmount = adjustPayment(installment);
+
+				if (remainingAmount.compareTo(adjustedAmount) >= 0) {
+					installment.setPaidAmount(adjustedAmount);
 					installment.setPaymentDate(LocalDateTime.now());
 					installment.setPaid(true);
-					remainingAmount = remainingAmount.subtract(installment.getAmount());
-					totalPaidAmount = totalPaidAmount.add(installment.getAmount());
+					remainingAmount = remainingAmount.subtract(adjustedAmount);
+					totalPaidAmount = totalPaidAmount.add(adjustedAmount);
 					installmentsPaid++;
 
-					loanInstallmentRepository.save(installment);
+					loanInstallmentService.save(installment);
 
 					if (remainingAmount.compareTo(BigDecimal.ZERO) <= 0) {
 						break;
@@ -148,20 +135,9 @@ public class LoanService {
 				}
 			}
 
-			if (installmentsPaid > 0 && installments.stream().allMatch(LoanInstallment::isPaid)) {
-				loan.setPaid(true);
-				loanRepository.save(loan);
+			BigDecimal remainingDept = loanInstallmentService.getRemainingDept(loanId);
 
-				Customer customer = loan.getCustomer();
-				customer.setUsedCreditLimit(customer.getUsedCreditLimit().subtract(paymentAmount)); // ?
-				customerRepository.save(customer);
-			}
-
-			BigDecimal remainingDept = loanInstallmentRepository.findByLoanId(loanId) // repeating call
-					.stream()
-					.filter(i -> !i.isPaid())
-					.map(LoanInstallment::getAmount)
-					.reduce(BigDecimal.ZERO, BigDecimal::add);
+			processRemainingDept(remainingDept, loan);
 
 			return PayLoanResponse.builder()
 					.installmentsPaid(installmentsPaid)
@@ -176,10 +152,21 @@ public class LoanService {
 		}
 	}
 
-	private List<LoanInstallment> getUnpaidInstallments(UUID loanId) {
-		return loanInstallmentRepository.findByLoanId(loanId).stream().filter(i -> !i.isPaid())
-				.filter(i -> i.getDueDate().isBefore(LocalDateTime.now().plusMonths(LoanConstants.MAX_UPFRONT_PAYMENT_COUNT)))
-				.sorted(Comparator.comparing(LoanInstallment::getDueDate)).collect(Collectors.toList());
+	private BigDecimal adjustPayment(LoanInstallment installment) {
+		long daysDifference = ChronoUnit.DAYS.between(installment.getDueDate(), LocalDateTime.now());
+		BigDecimal adjustmentFactor = installment.getAmount().multiply(LoanConstants.REWARD_PENALTY_COEFFICIENT).multiply(BigDecimal.valueOf(Math.abs(daysDifference)));
+		return daysDifference < 0 ? installment.getAmount().subtract(adjustmentFactor) : installment.getAmount().add(adjustmentFactor);
+	}
+
+	private void processRemainingDept(BigDecimal remainingDept, Loan loan) {
+		if (remainingDept == BigDecimal.ZERO) {
+			loan.setPaid(true);
+			loanRepository.save(loan);
+
+			Customer customer = loan.getCustomer();
+			customer.setUsedCreditLimit(customer.getUsedCreditLimit().subtract(loan.getLoanAmount())); // ?
+			customerRepository.save(customer);
+		}
 	}
 
 	private void validateCreateLoan(CreateLoanRequest createLoanRequest, BigDecimal creditLimit) {
@@ -208,7 +195,7 @@ public class LoanService {
 				.build();
 	}
 
-	private List<LoanInstallmentDto> createInstallments(Loan loan, BigDecimal totalLoanAmount) {
+	public List<LoanInstallmentDto> createInstallments(Loan loan, BigDecimal totalLoanAmount) {
 		List<LoanInstallmentDto> installments = new ArrayList<>();
 
 		int numberOfInstallments = loan.getNumberOfInstallment();
@@ -219,16 +206,7 @@ public class LoanService {
 		Stream.iterate(firstDueDate, date -> date.plusMonths(1))
 				.limit(numberOfInstallments)
 				.forEach(dueDate -> {
-					LoanInstallment installment = LoanInstallment.builder()
-							.isPaid(false)
-							.amount(installmentAmount)
-							.loan(loan)
-							.dueDate(dueDate)
-							.paymentDate(null)
-							.paidAmount(BigDecimal.ZERO)
-							.build();
-					installments.add(mapper.toLoanInstallmentDto(installment));
-					loanInstallmentRepository.save(installment);
+					installments.add(loanInstallmentService.createLoanInstallment(loan, dueDate, installmentAmount));
 				});
 
 		return installments;

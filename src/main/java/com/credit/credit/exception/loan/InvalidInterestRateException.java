@@ -1,4 +1,4 @@
-package com.credit.credit.exception;
+package com.credit.credit.exception.loan;
 
 public class InvalidInterestRateException extends RuntimeException {
 
