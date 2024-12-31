@@ -1,0 +1,1877 @@
+{
+	"info": {
+		"_postman_id": "b0b5bffb-6fca-4a62-b555-869ead4301c6",
+		"name": "Credit Module",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "40714785"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Cases",
+					"item": [
+						{
+							"name": "Register customer - existing email",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"customer@mail.com\",\r\n    \"password\": \"customer\",\r\n    \"name\": \"name\",\r\n    \"surname\": \"surname\",\r\n    \"creditLimit\": 5000.00\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/auth/register",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/auth/register \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\r\n           \"email\": \"customer\",\r\n           \"password\": \"customer\",\r\n           \"name\": \"name\",\r\n           \"surname\": \"surname\",\r\n           \"creditLimit\": 5000.00\r\n         }'"
+							},
+							"response": [
+								{
+									"name": "Register customer - existing email",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"customer@mail.com\",\r\n    \"password\": \"customer\",\r\n    \"name\": \"name\",\r\n    \"surname\": \"surname\",\r\n    \"creditLimit\": 5000.00\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/auth/register"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "36"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 14:00:08 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "The email address is already in use."
+								}
+							]
+						},
+						{
+							"name": "Register customer - invalid payload format",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"invalidemail\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/auth/register",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/auth/register \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\r\n           \"email\": \"customer\",\r\n           \"password\": \"customer\",\r\n           \"name\": \"name\",\r\n           \"surname\": \"surname\",\r\n           \"creditLimit\": 5000.00\r\n         }'"
+							},
+							"response": [
+								{
+									"name": "Register customer - invalid payload format",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"invalidemail\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/auth/register"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 14:37:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"password\": \"Password cannot be empty\",\n    \"surname\": \"Surname cannot be empty\",\n    \"name\": \"Name cannot be empty\",\n    \"creditLimit\": \"Credit limit cannot be empty\",\n    \"email\": \"Invalid email format\"\n}"
+								}
+							]
+						},
+						{
+							"name": "Register customer - missing password",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"valid@email.com\",\r\n    \"name\": \"name\",\r\n    \"surname\": \"surname\",\r\n    \"creditLimit\": 5000.00\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/auth/register",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/auth/register \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\r\n           \"email\": \"customer\",\r\n           \"password\": \"customer\",\r\n           \"name\": \"name\",\r\n           \"surname\": \"surname\",\r\n           \"creditLimit\": 5000.00\r\n         }'"
+							},
+							"response": []
+						},
+						{
+							"name": "Login - Non existing user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.environment.set('jwt_token', response.token);\r",
+											"pm.environment.set('customer_id', response.customerId);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"customerxx\",\r\n    \"password\": \"customerxx\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/auth/login",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/auth/login \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\"email\": \"customer\", \"password\": \"customer\"}'"
+							},
+							"response": [
+								{
+									"name": "Login - Non existing user",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"customerxx\",\r\n    \"password\": \"customerxx\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/auth/login"
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "20"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 14:01:31 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid credentials."
+								}
+							]
+						},
+						{
+							"name": "Login - Invalid password",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"email\": \"customer@mail.com\",\r\n    \"password\": \"xxx\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/auth/login",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/auth/login \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\"email\": \"customer\", \"password\": \"customer\"}'"
+							},
+							"response": [
+								{
+									"name": "Login - Invalid password",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"email\": \"customer@mail.com\",\r\n    \"password\": \"xxx\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/auth/login"
+									},
+									"status": "Unauthorized",
+									"code": 401,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "20"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 14:02:04 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid credentials."
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Register customer",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"customer3@mail.com\",\r\n    \"password\": \"customer\",\r\n    \"name\": \"namethree\",\r\n    \"surname\": \"surnamethree\",\r\n    \"creditLimit\": 15000.00\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9090/api/auth/register",
+						"description": "Generated from cURL: curl -X POST http://localhost:9090/api/auth/register \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\r\n           \"email\": \"customer\",\r\n           \"password\": \"customer\",\r\n           \"name\": \"name\",\r\n           \"surname\": \"surname\",\r\n           \"creditLimit\": 5000.00\r\n         }'"
+					},
+					"response": []
+				},
+				{
+					"name": "Login customer@mail.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set('jwt_token', response.token);\r",
+									"pm.environment.set('customer_id', response.customerId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"customer@mail.com\",\r\n    \"password\": \"customer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9090/api/auth/login",
+						"description": "Generated from cURL: curl -X POST http://localhost:9090/api/auth/login \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\"email\": \"customer\", \"password\": \"customer\"}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Login customer2@mail.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set('jwt_token', response.token);\r",
+									"pm.environment.set('customer_id', response.customerId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"customer2@mail.com\",\r\n    \"password\": \"customer\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9090/api/auth/login",
+						"description": "Generated from cURL: curl -X POST http://localhost:9090/api/auth/login \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\"email\": \"customer\", \"password\": \"customer\"}'"
+					},
+					"response": []
+				},
+				{
+					"name": "Login admin@mail.com",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"admin@mail.com\",\r\n    \"password\": \"admin\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9090/api/auth/login",
+						"description": "Generated from cURL: curl -X POST http://localhost:9090/api/auth/login \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -d '{\"email\": \"customer\", \"password\": \"customer\"}'"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Loan",
+			"item": [
+				{
+					"name": "Cases",
+					"item": [
+						{
+							"name": "Create loan - NotEnoughLimitException",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.environment.set('loan_id', response.loanId);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer  {{jwt_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n           \"loanAmount\": 2000000.00,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 6\r\n         }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/loan/{{customer_id}}",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/2b201da2-32cf-4d11-93d2-7336bb353cba \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0Mzk5NSwiZXhwIjoxNzM1NTQ0ODk1fQ.QrE1AcFdiHLZkxaaiGV9OQJ24eq6DX23bxoPDTfBUPg\" \\\r\n     -d '{\r\n           \"loanAmount\": 5000.00,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 6\r\n         }'"
+							},
+							"response": [
+								{
+									"name": "Create loan - NotEnoughLimitException",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n           \"loanAmount\": 2000000.00,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 6\r\n         }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/loan/{{customer_id}}"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "79"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 13:57:50 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "Insufficient credit limit. Requested amount: 2000000.00 Credit limit: 100000.00"
+								}
+							]
+						},
+						{
+							"name": "Create loan - non allowed / non existing customer",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer  {{jwt_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n           \"loanAmount\": 0.01,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 6\r\n         }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/loan/2b201da2-32cf-4d11-93d2-7336bb353cbc",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/2b201da2-32cf-4d11-93d2-7336bb353cba \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0Mzk5NSwiZXhwIjoxNzM1NTQ0ODk1fQ.QrE1AcFdiHLZkxaaiGV9OQJ24eq6DX23bxoPDTfBUPg\" \\\r\n     -d '{\r\n           \"loanAmount\": 5000.00,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 6\r\n         }'"
+							},
+							"response": [
+								{
+									"name": "Create loan - non existing customer",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n           \"loanAmount\": 0.01,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 6\r\n         }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/loan/2b201da2-32cf-4d11-93d2-7336bb353cbc"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "13"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 07:55:21 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "Access denied"
+								}
+							]
+						},
+						{
+							"name": "Create loan - InvalidInstallmentNumberException",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.environment.set('loan_id', response.loanId);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer  {{jwt_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n           \"loanAmount\": 0.01,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 1\r\n         }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/loan/{{customer_id}}",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/2b201da2-32cf-4d11-93d2-7336bb353cba \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0Mzk5NSwiZXhwIjoxNzM1NTQ0ODk1fQ.QrE1AcFdiHLZkxaaiGV9OQJ24eq6DX23bxoPDTfBUPg\" \\\r\n     -d '{\r\n           \"loanAmount\": 5000.00,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 6\r\n         }'"
+							},
+							"response": [
+								{
+									"name": "Create loan - InvalidInstallmentNumberException",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n           \"loanAmount\": 0.01,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 1\r\n         }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/loan/{{customer_id}}"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "69"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 07:55:25 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid installment number. Provided: 1 Valid options: [6, 9, 12, 24]"
+								}
+							]
+						},
+						{
+							"name": "Create loan - InvalidInterestRateException",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"const response = pm.response.json();\r",
+											"pm.environment.set('loan_id', response.loanId);\r",
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer  {{jwt_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n           \"loanAmount\": 0.01,\r\n           \"interestRate\": 1,\r\n           \"numberOfInstallments\": 6\r\n         }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/loan/{{customer_id}}",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/2b201da2-32cf-4d11-93d2-7336bb353cba \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0Mzk5NSwiZXhwIjoxNzM1NTQ0ODk1fQ.QrE1AcFdiHLZkxaaiGV9OQJ24eq6DX23bxoPDTfBUPg\" \\\r\n     -d '{\r\n           \"loanAmount\": 5000.00,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 6\r\n         }'"
+							},
+							"response": [
+								{
+									"name": "Create loan - InvalidInterestRateException",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer  {{jwt_token}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n           \"loanAmount\": 0.01,\r\n           \"interestRate\": 1,\r\n           \"numberOfInstallments\": 6\r\n         }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/loan/{{customer_id}}"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "58"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 07:55:30 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "Invalid interest rate. Provided: 1 Valid range: 0.1 to 0.5"
+								}
+							]
+						},
+						{
+							"name": "List loans - non allowed / non existing customer",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}"
+									}
+								],
+								"url": "http://localhost:9090/api/loan/2b201da2-32cf-4d11-93d2-7336bb353cbc",
+								"description": "Generated from cURL: curl -X GET http://localhost:9090/api/loan/9b54c9df-4b06-486d-8422-c5b06833993f \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0Mzk5NSwiZXhwIjoxNzM1NTQ0ODk1fQ.QrE1AcFdiHLZkxaaiGV9OQJ24eq6DX23bxoPDTfBUPg\""
+							},
+							"response": [
+								{
+									"name": "List loans Copy",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{jwt_token}}"
+											}
+										],
+										"url": "http://localhost:9090/api/loan/2b201da2-32cf-4d11-93d2-7336bb353cbc"
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "13"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 07:55:54 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "close"
+										}
+									],
+									"cookie": [],
+									"body": "Access denied"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Create loan",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"pm.environment.set('loan_id', response.loanId);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer  {{jwt_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n           \"loanAmount\": 5000.00,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 12\r\n         }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9090/api/loan/{{customer_id}}",
+						"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/2b201da2-32cf-4d11-93d2-7336bb353cba \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0Mzk5NSwiZXhwIjoxNzM1NTQ0ODk1fQ.QrE1AcFdiHLZkxaaiGV9OQJ24eq6DX23bxoPDTfBUPg\" \\\r\n     -d '{\r\n           \"loanAmount\": 5000.00,\r\n           \"interestRate\": 0.1,\r\n           \"numberOfInstallments\": 6\r\n         }'"
+					},
+					"response": []
+				},
+				{
+					"name": "List loans",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": "http://localhost:9090/api/loan/{{customer_id}}",
+						"description": "Generated from cURL: curl -X GET http://localhost:9090/api/loan/9b54c9df-4b06-486d-8422-c5b06833993f \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0Mzk5NSwiZXhwIjoxNzM1NTQ0ODk1fQ.QrE1AcFdiHLZkxaaiGV9OQJ24eq6DX23bxoPDTfBUPg\""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Loan Installment",
+			"item": [
+				{
+					"name": "Cases",
+					"item": [
+						{
+							"name": "List loan installments - non existing loan",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var template = `\r",
+											"<style type=\"text/css\">\r",
+											"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+											"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+											"    .tftable tr {background-color:#ffffff;}\r",
+											"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+											"    .tftable tr:hover {background-color:#e0ffff;}\r",
+											"</style>\r",
+											"\r",
+											"<table class=\"tftable\" border=\"1\">\r",
+											"    <tr>\r",
+											"        <th>ID</th>\r",
+											"        <th>Loan ID</th>\r",
+											"        <th>Amount</th>\r",
+											"        <th>Paid Amount</th>\r",
+											"        <th>Due Date</th>\r",
+											"        <th>Payment Date</th>\r",
+											"        <th>Paid</th>\r",
+											"    </tr>\r",
+											"    \r",
+											"    {{#each response.installments}}\r",
+											"        <tr>\r",
+											"            <td>{{id}}</td>\r",
+											"            <td>{{loanId}}</td>\r",
+											"            <td>{{amount}}</td>\r",
+											"            <td>{{paidAmount}}</td>\r",
+											"            <td>{{dueDate}}</td>\r",
+											"            <td>{{paymentDate}}</td>\r",
+											"            <td>{{paid}}</td>\r",
+											"        </tr>\r",
+											"    {{/each}}\r",
+											"</table>\r",
+											"`;\r",
+											"\r",
+											"function constructVisualizerPayload() {\r",
+											"    return {response: pm.response.json()}\r",
+											"}\r",
+											"\r",
+											"pm.visualizer.set(template, constructVisualizerPayload());"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}"
+									}
+								],
+								"url": "http://localhost:9090/api/loan/installment/2b201da2-32cf-4d11-93d2-7336bb353cbc",
+								"description": "Generated from cURL: curl -X GET http://localhost:9090/api/loan/installment/9b54c9df-4b06-486d-8422-c5b06833993f \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU2NjE3MywiZXhwIjoxNzM1NTY3MDczfQ.dLfStnMBiu_u5eYpcShaUDFAQxjR6JXa5Cfl99fSPpM\""
+							},
+							"response": [
+								{
+									"name": "List loan installments Copy",
+									"originalRequest": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{jwt_token}}"
+											}
+										],
+										"url": "http://localhost:9090/api/loan/installment/2b201da2-32cf-4d11-93d2-7336bb353cbc"
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "17"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 07:56:09 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Record not found."
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "List loan installments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var template = `\r",
+									"<style type=\"text/css\">\r",
+									"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+									"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+									"    .tftable tr {background-color:#ffffff;}\r",
+									"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+									"    .tftable tr:hover {background-color:#e0ffff;}\r",
+									"</style>\r",
+									"\r",
+									"<table class=\"tftable\" border=\"1\">\r",
+									"    <tr>\r",
+									"        <th>ID</th>\r",
+									"        <th>Loan ID</th>\r",
+									"        <th>Amount</th>\r",
+									"        <th>Paid Amount</th>\r",
+									"        <th>Due Date</th>\r",
+									"        <th>Payment Date</th>\r",
+									"        <th>Paid</th>\r",
+									"    </tr>\r",
+									"    \r",
+									"    {{#each response.installments}}\r",
+									"        <tr>\r",
+									"            <td>{{id}}</td>\r",
+									"            <td>{{loanId}}</td>\r",
+									"            <td>{{amount}}</td>\r",
+									"            <td>{{paidAmount}}</td>\r",
+									"            <td>{{dueDate}}</td>\r",
+									"            <td>{{paymentDate}}</td>\r",
+									"            <td>{{paid}}</td>\r",
+									"        </tr>\r",
+									"    {{/each}}\r",
+									"</table>\r",
+									"`;\r",
+									"\r",
+									"function constructVisualizerPayload() {\r",
+									"    return {response: pm.response.json()}\r",
+									"}\r",
+									"\r",
+									"pm.visualizer.set(template, constructVisualizerPayload());"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"url": "http://localhost:9090/api/loan/installment/{{loan_id}}",
+						"description": "Generated from cURL: curl -X GET http://localhost:9090/api/loan/installment/9b54c9df-4b06-486d-8422-c5b06833993f \\\r\n     -H \"Content-Type: application/json\" \\\r\n     -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU2NjE3MywiZXhwIjoxNzM1NTY3MDczfQ.dLfStnMBiu_u5eYpcShaUDFAQxjR6JXa5Cfl99fSPpM\""
+					},
+					"response": [
+						{
+							"name": "List loan installments - customer 2 - after payment old and possible incoming installments",
+							"originalRequest": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}"
+									}
+								],
+								"url": "http://localhost:9090/api/loan/installment/{{loan_id}}"
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Content-Type-Options",
+									"value": "nosniff"
+								},
+								{
+									"key": "X-XSS-Protection",
+									"value": "0"
+								},
+								{
+									"key": "Cache-Control",
+									"value": "no-cache, no-store, max-age=0, must-revalidate"
+								},
+								{
+									"key": "Pragma",
+									"value": "no-cache"
+								},
+								{
+									"key": "Expires",
+									"value": "0"
+								},
+								{
+									"key": "X-Frame-Options",
+									"value": "SAMEORIGIN"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json"
+								},
+								{
+									"key": "Transfer-Encoding",
+									"value": "chunked"
+								},
+								{
+									"key": "Date",
+									"value": "Tue, 31 Dec 2024 14:15:45 GMT"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=60"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n    \"installments\": [\n        {\n            \"id\": \"2e8f9862-0420-4488-9ddd-5b7698ba517a\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 458.33,\n            \"dueDate\": \"2024-10-01T00:00:00\",\n            \"paymentDate\": \"2024-10-01T00:00:00\",\n            \"paid\": true\n        },\n        {\n            \"id\": \"395e0eb7-7d4f-4db0-a848-c0195982bd17\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 458.33,\n            \"dueDate\": \"2024-11-01T00:00:00\",\n            \"paymentDate\": \"2024-11-01T00:00:00\",\n            \"paid\": true\n        },\n        {\n            \"id\": \"fceb439f-eb33-40a9-91eb-310d17421b0b\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 472.08,\n            \"dueDate\": \"2024-12-01T00:00:00\",\n            \"paymentDate\": \"2024-12-31T17:15:17.903834\",\n            \"paid\": true\n        },\n        {\n            \"id\": \"2200ff24-e3cb-4168-a912-ebd69ca884b9\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 458.33,\n            \"dueDate\": \"2025-01-01T00:00:00\",\n            \"paymentDate\": \"2024-12-31T17:15:17.906834\",\n            \"paid\": true\n        },\n        {\n            \"id\": \"e5d18a97-4af9-4ad7-a8fe-de7cf9ae1a09\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 444.12,\n            \"dueDate\": \"2025-02-01T00:00:00\",\n            \"paymentDate\": \"2024-12-31T17:15:17.906834\",\n            \"paid\": true\n        },\n        {\n            \"id\": \"ebdab3c4-c650-4d43-9d22-0aa07ddc0b16\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 431.29,\n            \"dueDate\": \"2025-03-01T00:00:00\",\n            \"paymentDate\": \"2024-12-31T17:15:17.906834\",\n            \"paid\": true\n        },\n        {\n            \"id\": \"fd157494-e5f3-4861-9bee-2a7eb26f3095\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 0,\n            \"dueDate\": \"2025-04-01T00:00:00\",\n            \"paymentDate\": null,\n            \"paid\": false\n        },\n        {\n            \"id\": \"1da28de3-e034-4e86-87d6-c9b66dfac0b3\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 0,\n            \"dueDate\": \"2025-05-01T00:00:00\",\n            \"paymentDate\": null,\n            \"paid\": false\n        },\n        {\n            \"id\": \"ec679ebd-0d1a-41b7-b436-59c42037d444\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 0,\n            \"dueDate\": \"2025-06-01T00:00:00\",\n            \"paymentDate\": null,\n            \"paid\": false\n        },\n        {\n            \"id\": \"ccdc9eac-ef49-4786-83bf-5f445d178e04\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 0,\n            \"dueDate\": \"2025-07-01T00:00:00\",\n            \"paymentDate\": null,\n            \"paid\": false\n        },\n        {\n            \"id\": \"2057617e-b65d-4463-a900-f47006f9c5cc\",\n            \"loanId\": \"99842569-906b-48c0-80a4-12015368f301\",\n            \"amount\": 458.33,\n            \"paidAmount\": 0,\n            \"dueDate\": \"2025-08-01T00:00:00\",\n            \"paymentDate\": null,\n            \"paid\": false\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Payment",
+			"item": [
+				{
+					"name": "Cases",
+					"item": [
+						{
+							"name": "Pay loan installments - 0 installments paid with insufficient amount",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"amount\": 1.00}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/loan/pay/{{loan_id}}",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/pay/9b54c9df-4b06-486d-8422-c5b06833993f \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0NTMxMCwiZXhwIjoxNzM1NTQ2MjEwfQ.0DDRhR04WKBW1NQLFrmOsl4XxKmyKYDBoyGf7OXlMFo\" \\\r\n    -d '{\"amount\": 11000.00}'\r\n"
+							},
+							"response": [
+								{
+									"name": "Pay loan installments - 0 installments paid with insufficient amount",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{jwt_token}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"amount\": 1.00}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/loan/pay/{{loan_id}}"
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 07:56:24 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"installmentsPaid\": 0,\n    \"totalAmountPaid\": 0,\n    \"loanPaid\": false,\n    \"remainingDept\": 5500.02,\n    \"remainingAmount\": 1\n}"
+								}
+							]
+						},
+						{
+							"name": "Pay loan installments - non existing loan",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"amount\": 11000.00}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/loan/pay/2b201da2-32cf-4d11-93d2-7336bb353cbc",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/pay/9b54c9df-4b06-486d-8422-c5b06833993f \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0NTMxMCwiZXhwIjoxNzM1NTQ2MjEwfQ.0DDRhR04WKBW1NQLFrmOsl4XxKmyKYDBoyGf7OXlMFo\" \\\r\n    -d '{\"amount\": 11000.00}'\r\n"
+							},
+							"response": [
+								{
+									"name": "Pay loan installments - 0 installments paid with insufficient amount Copy",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{jwt_token}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"amount\": 11000.00}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/loan/pay/2b201da2-32cf-4d11-93d2-7336bb353cbc"
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "plain",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "text/plain;charset=UTF-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "17"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 07:56:19 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "Record not found."
+								}
+							]
+						},
+						{
+							"name": "Pay loan installments - 3 installment paid with excess amount",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"amount\": 100000.00}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/loan/pay/{{loan_id}}",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/pay/9b54c9df-4b06-486d-8422-c5b06833993f \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0NTMxMCwiZXhwIjoxNzM1NTQ2MjEwfQ.0DDRhR04WKBW1NQLFrmOsl4XxKmyKYDBoyGf7OXlMFo\" \\\r\n    -d '{\"amount\": 11000.00}'\r\n"
+							},
+							"response": []
+						},
+						{
+							"name": "Pay loan installments - 1 installment paid with excess amount",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Authorization",
+										"value": "Bearer {{jwt_token}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"amount\": 1000.00}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": "http://localhost:9090/api/loan/pay/{{loan_id}}",
+								"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/pay/9b54c9df-4b06-486d-8422-c5b06833993f \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0NTMxMCwiZXhwIjoxNzM1NTQ2MjEwfQ.0DDRhR04WKBW1NQLFrmOsl4XxKmyKYDBoyGf7OXlMFo\" \\\r\n    -d '{\"amount\": 11000.00}'\r\n"
+							},
+							"response": [
+								{
+									"name": "Pay loan installments - 3 installment paid with excess amount Copy",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Authorization",
+												"value": "Bearer {{jwt_token}}"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\"amount\": 1000.00}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": "http://localhost:9090/api/loan/pay/{{loan_id}}"
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Content-Type-Options",
+											"value": "nosniff"
+										},
+										{
+											"key": "X-XSS-Protection",
+											"value": "0"
+										},
+										{
+											"key": "Cache-Control",
+											"value": "no-cache, no-store, max-age=0, must-revalidate"
+										},
+										{
+											"key": "Pragma",
+											"value": "no-cache"
+										},
+										{
+											"key": "Expires",
+											"value": "0"
+										},
+										{
+											"key": "X-Frame-Options",
+											"value": "SAMEORIGIN"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										},
+										{
+											"key": "Transfer-Encoding",
+											"value": "chunked"
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 31 Dec 2024 07:56:40 GMT"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=60"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"installmentsPaid\": 1,\n    \"totalAmountPaid\": 916.67,\n    \"loanPaid\": false,\n    \"remainingDept\": 4583.35,\n    \"remainingAmount\": 83.33\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Pay loan installments",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{jwt_token}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"amount\": 100000.00}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:9090/api/loan/pay/{{loan_id}}",
+						"description": "Generated from cURL: curl -X POST http://localhost:9090/api/loan/pay/9b54c9df-4b06-486d-8422-c5b06833993f \\\r\n    -H \"Content-Type: application/json\" \\\r\n    -H \"Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJjdXN0b21lciIsImlhdCI6MTczNTU0NTMxMCwiZXhwIjoxNzM1NTQ2MjEwfQ.0DDRhR04WKBW1NQLFrmOsl4XxKmyKYDBoyGf7OXlMFo\" \\\r\n    -d '{\"amount\": 11000.00}'\r\n"
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -99,7 +99,7 @@ public class AuthenticationService {
 			return AuthenticationResponse
 					.builder()
 					.token(jwtToken)
-					.customerId(user.getCustomer().getId())
+					.customerId(user.getCustomer() != null ? user.getCustomer().getId() : null)
 					.build();
 		} catch (AuthenticationException e) {
 			throw new InvalidCredentialsException("Invalid credentials.");

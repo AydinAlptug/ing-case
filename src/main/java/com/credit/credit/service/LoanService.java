@@ -182,7 +182,7 @@ public class LoanService {
 	}
 
 	private BigDecimal calculateTotalLoanAmount(CreateLoanRequest createLoanRequest) {
-		return createLoanRequest.getLoanAmount().add(createLoanRequest.getLoanAmount().multiply(createLoanRequest.getInterestRate()));
+		return createLoanRequest.getLoanAmount().multiply(createLoanRequest.getInterestRate().add(BigDecimal.ONE));
 	}
 
 	private Loan createLoanEntity(Customer customer, int numberOfInstallments, BigDecimal loanAmount) {
