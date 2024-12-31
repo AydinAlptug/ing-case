@@ -56,3 +56,12 @@ Customer 2    | 5500.00           | 458.33             | 0.00        | 06/01/202
 ### [Credit Module.postman_collection.v2.0.json](Credit%20Module.postman_collection.v2.0.json)
 
 ### [Publicly accessible postman collection](https://www.postman.com/spacecraft-astronaut-31521016/my-workspace/collection/247s782/credit-module )
+
+## Running the application
+```bash
+mvn clean install
+```
+
+```bash
+mvn spring-boot:run
+```
