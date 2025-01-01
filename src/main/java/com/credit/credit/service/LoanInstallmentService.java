@@ -20,12 +20,13 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class LoanInstallmentService {
+public class LoanInstallmentService implements ILoanInstallmentService {
 
 	private final ILoanInstallmentRepository loanInstallmentRepository;
 
 	private final Mapper mapper;
 
+	@Override
 	public ListLoanInstallmentsResponse getLoanInstallments(UUID loanId) {
 		try {
 			List<LoanInstallment> installments = loanInstallmentRepository.findByLoanId(loanId);
@@ -42,6 +43,7 @@ public class LoanInstallmentService {
 		}
 	}
 
+	@Override
 	public LoanInstallmentDto createLoanInstallment(Loan loan, LocalDateTime dueDate, BigDecimal installmentAmount) {
 		LoanInstallment installment = LoanInstallment.builder()
 				.isPaid(false)
@@ -55,16 +57,18 @@ public class LoanInstallmentService {
 		return mapper.toLoanInstallmentDto(installment);
 	}
 
+	@Override
 	public List<LoanInstallment> getUnpaidInstallments(UUID loanId, boolean all) {
 		List<LoanInstallment> installments = loanInstallmentRepository.findByLoanId(loanId).stream()
 				.filter(i -> !i.isPaid())
 				.filter(i -> all || i.getDueDate().isBefore(LocalDateTime.now().plusMonths(LoanConstants.MAX_UPFRONT_PAYMENT_COUNT)))
-				.sorted(Comparator.comparing(LoanInstallment::getDueDate))  // Sort by due date
+				.sorted(Comparator.comparing(LoanInstallment::getDueDate))
 				.collect(Collectors.toList());
 
 		return installments;
 	}
 
+	@Override
 	public BigDecimal getRemainingDept(UUID loanId){
 		return loanInstallmentRepository.findByLoanId(loanId) // repeating call
 				.stream()
@@ -73,6 +77,7 @@ public class LoanInstallmentService {
 				.reduce(BigDecimal.ZERO, BigDecimal::add);
 	}
 
+	@Override
 	public LoanInstallment save(LoanInstallment installment) {
 		return loanInstallmentRepository.save(installment);
 	}

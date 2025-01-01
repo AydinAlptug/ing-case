@@ -6,8 +6,8 @@ import com.credit.credit.model.response.CreateLoanResponse;
 import com.credit.credit.model.response.ListLoanInstallmentsResponse;
 import com.credit.credit.model.response.ListLoansResponse;
 import com.credit.credit.model.response.PayLoanResponse;
-import com.credit.credit.service.LoanInstallmentService;
-import com.credit.credit.service.LoanService;
+import com.credit.credit.service.ILoanService;
+import com.credit.credit.service.ILoanInstallmentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -25,9 +25,9 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class LoanController {
 
-	private final LoanService loanService;
+	private final ILoanService loanService;
 
-	private final LoanInstallmentService loanInstallmentService;
+	private final ILoanInstallmentService loanInstallmentService;
 
 	@GetMapping("/{customerId}")
 	@PreAuthorize("hasRole('ROLE_ADMIN') or @authorizationService.hasAccess(authentication, #customerId)")

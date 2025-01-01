@@ -39,12 +39,12 @@ import java.util.stream.Stream;
 
 @Service
 @RequiredArgsConstructor
-public class LoanService {
+public class LoanService implements ILoanService {
 	private final ICustomerRepository customerRepository;
 
 	private final ILoanRepository loanRepository;
 
-	private final LoanInstallmentService loanInstallmentService;
+	private final ILoanInstallmentService loanInstallmentService;
 
 	private final SpecificationFactory specificationFactory;
 
@@ -52,6 +52,7 @@ public class LoanService {
 
 	private final Mapper mapper;
 
+	@Override
 	public ListLoansResponse getLoans(UUID customerId) {
 		List<Loan> loans = loanRepository.findByCustomerId(customerId);
 		List<LoanDto> loanDtos = loans.stream()
@@ -65,6 +66,7 @@ public class LoanService {
 	}
 
 	@Transactional
+	@Override
 	public CreateLoanResponse createLoan(CreateLoanRequest createLoanRequest, UUID customerId) {
 		BigDecimal totalLoanAmount;
 		try {
@@ -101,6 +103,7 @@ public class LoanService {
 	}
 
 	@Transactional
+	@Override
 	public PayLoanResponse payLoan(UUID loanId, PayLoanRequest payLoanRequest) {
 		try {
 			BigDecimal paymentAmount = payLoanRequest.getAmount();
@@ -195,7 +198,7 @@ public class LoanService {
 				.build();
 	}
 
-	public List<LoanInstallmentDto> createInstallments(Loan loan, BigDecimal totalLoanAmount) {
+	private List<LoanInstallmentDto> createInstallments(Loan loan, BigDecimal totalLoanAmount) {
 		List<LoanInstallmentDto> installments = new ArrayList<>();
 
 		int numberOfInstallments = loan.getNumberOfInstallment();

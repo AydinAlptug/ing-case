@@ -27,7 +27,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AuthenticationService {
+public class AuthenticationService implements IAuthenticationService {
 
 	private final AuthenticationManager authenticationManager;
 
@@ -42,6 +42,7 @@ public class AuthenticationService {
 	private final PasswordEncoder passwordEncoder;
 
 	@Transactional
+	@Override
 	public AuthenticationResponse register(RegisterRequest request) {
 		try {
 
@@ -85,6 +86,7 @@ public class AuthenticationService {
 		}
 	}
 
+	@Override
 	public AuthenticationResponse login(AuthenticationRequest request) {
 		try {
 			Authentication authentication = authenticationManager.authenticate(
