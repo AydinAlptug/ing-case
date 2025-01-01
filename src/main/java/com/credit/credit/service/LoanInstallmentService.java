@@ -18,9 +18,14 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Service
 @RequiredArgsConstructor
 public class LoanInstallmentService implements ILoanInstallmentService {
+
+	private static final Logger logger = LogManager.getLogger(LoanInstallmentService.class);
 
 	private final ILoanInstallmentRepository loanInstallmentRepository;
 
@@ -29,7 +34,9 @@ public class LoanInstallmentService implements ILoanInstallmentService {
 	@Override
 	public ListLoanInstallmentsResponse getLoanInstallments(UUID loanId) {
 		try {
+			logger.info("Getting installments for loan with id: {}", loanId);
 			List<LoanInstallment> installments = loanInstallmentRepository.findByLoanId(loanId);
+
 			List<LoanInstallmentDto> installmentDtos = installments.stream()
 					.map(mapper::toLoanInstallmentDto)
 					.collect(Collectors.toList());
@@ -39,12 +46,14 @@ public class LoanInstallmentService implements ILoanInstallmentService {
 					.installments(installmentDtos)
 					.build();
 		} catch (Exception e) {
-			throw new InternalServerException(e.getMessage());
+			logger.error("Error getting installments for loan with id: {} {}", loanId, e.getMessage());
+			throw new InternalServerException("An error occurred");
 		}
 	}
 
 	@Override
 	public LoanInstallmentDto createLoanInstallment(Loan loan, LocalDateTime dueDate, BigDecimal installmentAmount) {
+		logger.info("Creating installment for loan with id: {}", loan.getId());
 		LoanInstallment installment = LoanInstallment.builder()
 				.isPaid(false)
 				.amount(installmentAmount)

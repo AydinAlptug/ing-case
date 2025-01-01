@@ -24,6 +24,8 @@ import com.credit.credit.repository.ILoanRepository;
 import com.credit.credit.validator.LoanValidator;
 import com.credit.credit.validator.SpecificationFactory;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,6 +42,9 @@ import java.util.stream.Stream;
 @Service
 @RequiredArgsConstructor
 public class LoanService implements ILoanService {
+
+	private static final Logger logger = LogManager.getLogger(LoanService.class);
+
 	private final ICustomerRepository customerRepository;
 
 	private final ILoanRepository loanRepository;
@@ -59,6 +64,7 @@ public class LoanService implements ILoanService {
 				.map(mapper::toLoanDto)
 				.collect(Collectors.toList());
 
+		logger.info("For customer with id {} {} loans found.", customerId, loanDtos.size());
 		return ListLoansResponse.builder()
 				.customerId(customerId)
 				.loans(loanDtos)
@@ -70,6 +76,8 @@ public class LoanService implements ILoanService {
 	public CreateLoanResponse createLoan(CreateLoanRequest createLoanRequest, UUID customerId) {
 		BigDecimal totalLoanAmount;
 		try {
+			logger.info("Creating a new loan for customer with id {}", customerId);
+
 			Customer customer = customerRepository.findById(customerId).orElseThrow(() ->
 					new EntityNotFoundException("Customer not found"));
 			BigDecimal remainingLimit = customer.getCreditLimit().subtract(customer.getUsedCreditLimit());
@@ -84,6 +92,8 @@ public class LoanService implements ILoanService {
 			customer.setUsedCreditLimit(customer.getUsedCreditLimit().add(createLoanRequest.getLoanAmount()));
 			customerRepository.save(customer);
 
+			logger.info("Loan created successfully with id {}", loan.getId());
+
 			return CreateLoanResponse.builder()
 					.loanId(loan.getId())
 					.loanAmount(createLoanRequest.getLoanAmount())
@@ -96,8 +106,10 @@ public class LoanService implements ILoanService {
 				 InsufficientCreditLimitException |
 				 InvalidInterestRateException |
 				 InvalidInstallmentNumberException e) {
+			logger.warn("Error creating loan: {}", e.getMessage());
 			throw e;
 		} catch (Exception e) {
+			logger.error("An error occurred while creating loan: {}", e.getMessage());
 			throw new InternalServerException("An error occurred.");
 		}
 	}
@@ -106,6 +118,8 @@ public class LoanService implements ILoanService {
 	@Override
 	public PayLoanResponse payLoan(UUID loanId, PayLoanRequest payLoanRequest) {
 		try {
+			logger.info("Processing loan payment for loan with id {}", loanId);
+
 			BigDecimal paymentAmount = payLoanRequest.getAmount();
 			BigDecimal remainingAmount = paymentAmount;
 
@@ -138,6 +152,8 @@ public class LoanService implements ILoanService {
 				}
 			}
 
+			logger.info("Total count of paid installments: {}", installmentsPaid);
+
 			BigDecimal remainingDept = loanInstallmentService.getRemainingDept(loanId);
 
 			processRemainingDept(remainingDept, loan);
@@ -150,7 +166,11 @@ public class LoanService implements ILoanService {
 					.remainingAmount(remainingAmount)
 					.build();
 
+		} catch (EntityNotFoundException e) {
+			logger.warn("Loan entity not found with id {}", loanId);
+			throw e;
 		} catch (Exception e) {
+			logger.error("Error processing loan payment: {}", e.getMessage());
 			throw new InternalServerException("Error processing loan payment: " + e.getMessage());
 		}
 	}

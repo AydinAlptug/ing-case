@@ -50,9 +50,41 @@ Customer 2    | 5500.00           | 458.33             | 0.00        | 05/01/202
 Customer 2    | 5500.00           | 458.33             | 0.00        | 06/01/2025  | N/A           | Unpaid | No    
 |         |                   |                    |             |             |               |        |        |
 
-## Postman Colelctions
+## Postman Collections
 ### [Credit Module.postman_collection.2.1.json](Credit%20Module.postman_collection.2.1.json)
 
 ### [Credit Module.postman_collection.v2.0.json](Credit%20Module.postman_collection.v2.0.json)
 
 ### [Publicly accessible postman collection](https://www.postman.com/spacecraft-astronaut-31521016/my-workspace/collection/247s782/credit-module )
+
+## Running the application
+
+```bash
+mvn clean install
+```
+
+```bash
+mvn spring-boot:run
+```
+
+### or with docker
+Build the image
+```bash
+docker build -t credit-app .
+```
+Run 
+```bash
+docker run -p 9090:9090 credit-app
+```
+
+### Access H2 DB
+
+URL:
+```bash
+http://localhost:9090/h2-console
+```
+
+JDBC URL:
+```bash
+jdbc:h2:mem:creditdb
+```

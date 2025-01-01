@@ -25,9 +25,14 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService implements IAuthenticationService {
+
+	private static final Logger logger = LogManager.getLogger(AuthenticationService.class);
 
 	private final AuthenticationManager authenticationManager;
 
@@ -45,6 +50,7 @@ public class AuthenticationService implements IAuthenticationService {
 	@Override
 	public AuthenticationResponse register(RegisterRequest request) {
 		try {
+			logger.info("Registering a new user with email: {}", request.getEmail());
 
 			userRepository.findByEmail(request.getEmail()).ifPresent(user -> {
 				throw new BadRequestException("The email address is already in use.");
@@ -72,16 +78,21 @@ public class AuthenticationService implements IAuthenticationService {
 
 			String jwtToken = jwtService.generateToken(user);
 
+			logger.info("User registered successfully with email: {}", request.getEmail());
+
 			return AuthenticationResponse
 					.builder()
 					.token(jwtToken)
 					.customerId(customer.getId())
 					.build();
 		} catch (BadRequestException e) {
+			logger.warn("The email address is already in use.");
 			throw e;
 		}  catch (IllegalArgumentException e) {
+			logger.warn("An error occurred while registering the user: {}", e.getMessage());
 			throw new BadRequestException(e.getMessage());
 		} catch (Exception e) {
+			logger.error("An error occurred while registering the user: {}", e.getMessage());
 			throw new InternalServerException("An error occurred while registering the user.");
 		}
 	}
@@ -89,6 +100,7 @@ public class AuthenticationService implements IAuthenticationService {
 	@Override
 	public AuthenticationResponse login(AuthenticationRequest request) {
 		try {
+			logger.info("Logging in with email: {}", request.getEmail());
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(
 							request.getEmail(),
@@ -104,8 +116,10 @@ public class AuthenticationService implements IAuthenticationService {
 					.customerId(user.getCustomer() != null ? user.getCustomer().getId() : null)
 					.build();
 		} catch (AuthenticationException e) {
+			logger.warn("Invalid credentials.");
 			throw new InvalidCredentialsException("Invalid credentials.");
 		} catch (Exception e) {
+			logger.error("An error occurred while logging in: {}", e.getMessage());
 			throw new InternalServerException("An error occurred while logging in.");
 		}
 	}
